@@ -41,13 +41,6 @@ class DispositivoService(
 
     //front end
     fun pesquisaDispositivo(numeroInterno: String, motorista: Int, veiculo: String, mac: String): List<DispositivoListDTO> {
-        /*val modeloDispositivo : DispositivoModelo = if(modelo == 0){
-            DispositivoModelo.BLAZONLABS
-        }else if( modelo == 1){
-            DispositivoModelo.MECHATRONICS
-        }else{
-            DispositivoModelo.TODOS
-        }*/
         return dispositivoRepository.pesquisaDispositivos(numeroInterno, motorista, veiculo, mac)
     }
 
@@ -55,7 +48,7 @@ class DispositivoService(
         return dispositivoMapper.toDispositivoFormDTO(dispositivoRepository.findByIdOrNull(id))
     }
 
-    fun salvaDispositivo(dispositivo: DispositivoDTO): DispositivoEntity {
+    fun salvaDispositivo(dispositivo: DispositivoFormDTO): DispositivoEntity {
         val dispositivoEntity = dispositivoMapper.toDispositivoEntity(dispositivo)
         try {
             if (dispositivoRepository.findByNumeroInterno(dispositivo.numeroInterno) != null && dispositivo.id == 0)

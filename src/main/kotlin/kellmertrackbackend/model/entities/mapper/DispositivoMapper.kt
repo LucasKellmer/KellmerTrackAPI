@@ -1,7 +1,6 @@
 package kellmertrackbackend.model.entities.mapper
 
 import kellmertrackbackend.model.constants.DispositivoModelo
-import kellmertrackbackend.model.dto.AlvaraConstrucaoDTO
 import kellmertrackbackend.model.dto.DispositivoDTO
 import kellmertrackbackend.model.dto.DispositivoFormDTO
 import kellmertrackbackend.model.dto.EmpresaDTO
@@ -10,8 +9,6 @@ import kellmertrackbackend.model.entities.EmpresaEntity
 import kellmertrackbackend.repository.EmpresaRepository
 import kellmertrackbackend.repository.MotoristaRepository
 import kellmertrackbackend.repository.VeiculoRepository
-import org.apache.poi.hssf.usermodel.HSSFRow
-import org.apache.poi.ss.usermodel.DataFormatter
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
 import java.util.*
@@ -23,17 +20,17 @@ class DispositivoMapper(
     private val empresaRepository: EmpresaRepository,
 ) {
 
-    fun toDispositivoEntity(dispositivo : DispositivoDTO) : DispositivoEntity{
+    fun toDispositivoEntity(dispositivo : DispositivoFormDTO) : DispositivoEntity{
 
         return DispositivoEntity(
             id = dispositivo.id,
             numeroInterno = dispositivo.numeroInterno,
             motorista = motoristaRepository.findByIdOrNull(dispositivo.motoristaId)!!,
             veiculo = veiculoRepository.findByIdentificacao(dispositivo.veiculo)!!,
-            modelo = dispositivo.modelo,
+            modelo = DispositivoModelo.BLAZONLABS,//dispositivo.modelo,
             mac = dispositivo.mac,
             dataVinculo = dispositivo.dataVinculo,
-            empresa = empresaRepository.findByCodigo(dispositivo.empresa.codigo)
+            empresa = empresaRepository.findByCodigo(dispositivo.empresa)
         )
     }
 
@@ -43,11 +40,12 @@ class DispositivoMapper(
                 id = it.id,
                 numeroInterno = it.numeroInterno,
                 motoristaId = it.motorista.id,
-                motoristaNome = it.motorista.nome,
+                //motoristaNome = it.motorista.nome,
                 modelo = it.modelo.ordinal,
-                veiculoId = it.veiculo.identificacao,
+                veiculo = it.veiculo.identificacao,
                 mac = it.mac,
-                dataVinculo = it.dataVinculo
+                dataVinculo = it.dataVinculo,
+                empresa = it.empresa?.codigo
             )
         }
     }

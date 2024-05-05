@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository
 @Repository
 interface EmpresaRepository : JpaRepository<EmpresaEntity, String> {
 
-    fun findByCodigo(codigo : String) : EmpresaEntity?
+    fun findByCodigo(codigo : String?) : EmpresaEntity?
 }

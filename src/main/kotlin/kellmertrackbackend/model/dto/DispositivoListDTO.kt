@@ -12,6 +12,6 @@ data class DispositivoListDTO(
     val dataVinculo : Date?,
     val motoristaId : Int?,
     val motoristaNome : String?,
-    val empresa : String
+    val empresa : String?
 ) {
 }

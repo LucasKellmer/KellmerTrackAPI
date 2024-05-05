@@ -1,10 +1,7 @@
 package kellmertrackbackend.controller
 
 import jakarta.transaction.Transactional
-import kellmertrackbackend.model.dto.DispositivoDTO
-import kellmertrackbackend.model.dto.DispositivoFormDTO
 import kellmertrackbackend.model.dto.MotoristaDTO
-import kellmertrackbackend.model.entities.DispositivoEntity
 import kellmertrackbackend.model.entities.MotoristaEntity
 import kellmertrackbackend.service.MotoristaService
 import org.springframework.http.ResponseEntity

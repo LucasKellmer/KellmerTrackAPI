@@ -32,7 +32,7 @@ class DispositivoController(
     }
 
     @PostMapping("dispositivo")
-    fun salvaDevice(@RequestBody dispositivo : DispositivoDTO): ResponseEntity<DispositivoEntity> {
+    fun salvaDispositivo(@RequestBody dispositivo : DispositivoFormDTO): ResponseEntity<DispositivoEntity> {
         return ResponseEntity.ok(dispositivoService.salvaDispositivo(dispositivo) )
     }
 

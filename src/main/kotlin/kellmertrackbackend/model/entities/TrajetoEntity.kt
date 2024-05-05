@@ -8,10 +8,10 @@ import java.util.*
 data class TrajetoEntity (
     @Id
     val id : UUID,
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "dispositivo_id")
     val dispositivoId : DispositivoEntity,
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "veiculo_id")
     val veiculos : VeiculoEntity?,
     val momento : Date,

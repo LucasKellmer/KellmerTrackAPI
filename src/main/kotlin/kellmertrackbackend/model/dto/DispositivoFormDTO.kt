@@ -8,10 +8,11 @@ data class DispositivoFormDTO (
     val numeroInterno : String,
     val mac : String,
     val modelo : Int,
-    val veiculoId : String,
+    val veiculo : String,
     @JsonFormat(pattern = "dd/MM/yyyy")
     val dataVinculo : Date?,
     val motoristaId : Int?,
-    val motoristaNome : String?
+    val empresa : String?
+    //val motoristaNome : String?
     ) {
 }
