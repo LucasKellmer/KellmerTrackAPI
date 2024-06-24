@@ -1,9 +1,6 @@
 package kellmertrackbackend.controller
 
-import kellmertrackbackend.model.dto.DispositivoDTO
-import kellmertrackbackend.model.dto.EntregaDTO
-import kellmertrackbackend.model.dto.RotacaoDTO
-import kellmertrackbackend.model.dto.TrajetoDTO
+import kellmertrackbackend.model.dto.*
 import kellmertrackbackend.service.*
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -84,5 +81,11 @@ class KellmerTrackController(
         return ResponseEntity.ok().build()
     }
 
+    //comprovante
+    @PostMapping("entregas/comprovante")
+    fun salvaComprovante(@RequestBody comprovante : ComprovanteDTO) : ResponseEntity<Void> {
+        entregaService.salvaComprovante(comprovante)
+        return ResponseEntity.ok().build()
+    }
 
 }

@@ -8,14 +8,17 @@ import java.util.*
 class RotacaoFirebaseResult : FirebaseResult<RotacaoDTO>{
 
     override fun parse(doc: QueryDocumentSnapshot): RotacaoDTO {
+        println(doc.id)
+        println(doc.data)
         val cal = Calendar.getInstance()
         cal.time = doc.getDate("momento")
         return RotacaoDTO(
             id = doc.getString("id")!!,
             rpm = doc.getLong("rpm")?.toInt()!!,
             momento = cal.time,
-            veiculoId = doc.getString("veiculoId")!!,
-            dispositivoId = doc.getLong("dispositivoId")?.toInt()!!
+            veiculo = doc.getString("veiculo")!!,
+            dispositivoId = doc.getLong("dispositivoId")?.toInt()!!,
+            entregaId = doc.getLong("entregaId")?.toInt(),
         )
     }
 

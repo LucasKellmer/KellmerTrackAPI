@@ -12,27 +12,24 @@ import java.util.Date
 @Service
 class EntregaService(
     private val entregaRepository: EntregaRepository,
+    private val comprovanteService : ComprovanteService,
     private val entregaMapper: EntregaMapper
 ) {
 
     //aplicativo
-    /*fun findEntregaByVeiculo(veiculo: String?): EntregaDTO?{
-        println(veiculo)
-        val entregaEntity = entregaRepository.findEntregaByVeiculo(veiculo)
-        /*val entregaList = mutableListOf<EntregaDTO?>()
-        entregaRepository.findEntregaByVeiculo(veiculo)?.forEach {
-            entregaList.add(entregaMapper.toEntregaDTO(it))
-        }*/
-        return entregaMapper.toEntregaDTO(entregaEntity)
-    }*/
-
     fun atualizaEntregaStatus(id: Int, status : Int){
         entregaRepository.atualizaEntregaStatus(id, status)
+    }
+
+    fun salvaComprovante(comprovante : ComprovanteDTO){
+        comprovanteService.salvaComprovante(comprovante)
     }
 
     //firebase
     fun salvaEntrega(entrega : EntregaFirebaseDTO){
         val entregaEntity = entregaMapper.fromEntregaFirebaseDTOtoEntity(entrega)
+        println("================== salvaEntrega chamado:")
+        println(entregaEntity)
         entregaRepository.save(entregaEntity)
     }
 
@@ -42,6 +39,7 @@ class EntregaService(
             0 -> EntregaStatus.PENDENTE
             1 -> EntregaStatus.TRANSITO
             2 -> EntregaStatus.ENTREGUE
+            3 -> EntregaStatus.FINALIZADO
             else -> null
         }
         return entregaRepository.pesquisaEntregas(descricao, dataIni, dataFim, entregaStatus)

@@ -1,5 +1,6 @@
 package kellmertrackbackend.model.dto
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import java.util.*
 
 data class EntregaFirebaseDTO(
@@ -15,4 +16,13 @@ data class EntregaFirebaseDTO(
     val dataEntradaUsina : Date?,
     val sincronizado : Boolean?
 ) {
+
+    override fun toString(): String {
+        return try {
+            val mapper = ObjectMapper()
+            mapper.writeValueAsString(this)
+        } catch (e: Exception) {
+            ""
+        }
+    }
 }

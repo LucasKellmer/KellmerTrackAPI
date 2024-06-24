@@ -4,4 +4,5 @@ enum class EntregaStatus {
     PENDENTE,
     TRANSITO,
     ENTREGUE,
+    FINALIZADO
 }

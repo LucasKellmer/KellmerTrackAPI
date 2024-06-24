@@ -1,16 +1,10 @@
-package kellmertrackbackend.model.dto
+package kellmertrackbackend.socket
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import java.util.*
 
-class TrajetoDTO(
-    val id : String?,
-    val dispositivoId : Int?,
-    val veiculoId : String?,
-    val momento : Date?,
-    val latitude : Double?,
-    val longitude : Double?,
-    val velocidade : Int?
+class SocketMessage(
+    val type : String? = null,
+    val message : String? = null
 ) {
 
     override fun toString(): String {

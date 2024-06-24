@@ -6,10 +6,10 @@ import java.util.*
 
 @NamedNativeQuery(
     name = "buscaUltimaRotacao",
-    query = "select cast(r.id as text) as id, r.sernsortrack_dispositivo_rotacao_id,\n"+
-            " r.veiculo_id, cast(r.momento as timestamp) as momento, r.rpm \n"+
-            " from grupo.hobitrack_rotacoes r \n"+
-            " where r.veiculos_id = :identificacao \n"+
+    query = "select cast(r.id as text) as id, r.dispositivo_id,\n"+
+            " r.veiculo, cast(r.momento as timestamp) as momento, r.rpm \n"+
+            " from rotacoes r \n"+
+            " where r.veiculo = :identificacao \n"+
             " order by r.momento desc limit 1 \n",
     resultSetMapping = "rotacaoDTO"
 )
@@ -19,8 +19,8 @@ import java.util.*
         targetClass = RotacaoDTO::class,
         columns = arrayOf(
             ColumnResult(name = "id"),
-            ColumnResult(name = "sernsortrack_dispositivo_rotacao_id"),
-            ColumnResult(name = "veiculos_id"),
+            ColumnResult(name = "dispositivo_id"),
+            ColumnResult(name = "veiculo"),
             ColumnResult(name = "momento"),
             ColumnResult(name = "rpm"),
         )
@@ -28,17 +28,20 @@ import java.util.*
 )
 
 @Entity
-@Table(name = "sensortrack_rotacoes")
+@Table(name = "rotacoes")
 data class RotacaoEntity (
     @Id
-    val id : UUID,
+    val id : String,
     @OneToOne
-    @JoinColumn(name = "sensortrack_dispositivo_rotacao_id")
+    @JoinColumn(name = "dispositivo_id")
     val dispositivo : DispositivoEntity,
-    @OneToOne
-    @JoinColumn(name = "veiculo_id")
+    @ManyToOne
+    @JoinColumn(name = "veiculo")
     val veiculo : VeiculoEntity?,
     val momento : Date,
-    val rpm : Int
+    val rpm : Int,
+    @ManyToOne
+    @JoinColumn(name = "entrega_id")
+    val entregaId : EntregaEntity?
 ){
 }

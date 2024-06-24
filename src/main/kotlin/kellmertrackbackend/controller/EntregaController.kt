@@ -1,7 +1,6 @@
 package kellmertrackbackend.controller
 
 import jakarta.transaction.Transactional
-import kellmertrackbackend.model.constants.EntregaStatus
 import kellmertrackbackend.model.dto.EntregaDTO
 import kellmertrackbackend.model.dto.EntregaFormDTO
 import kellmertrackbackend.model.dto.EntregaListDTO
@@ -34,7 +33,7 @@ class EntregaController(
     }
 
     @PostMapping("entrega")
-    fun salvaDevice(@RequestBody entrega : EntregaFormDTO): ResponseEntity<EntregaEntity> {
+    fun salvaEntrega(@RequestBody entrega : EntregaFormDTO): ResponseEntity<EntregaEntity> {
         println(entrega)
         return ResponseEntity.ok(entregaService.salvaEntrega(entrega) )
     }

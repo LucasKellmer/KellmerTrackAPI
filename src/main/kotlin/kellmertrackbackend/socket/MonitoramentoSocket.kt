@@ -25,7 +25,8 @@ class MonitoramentoSocket(private val webSocketHandler: WebSocketHandler) {
     }
 
     fun enviarMensagem(tipo: String, entregaId: Int?, dispositivo : Int) {
-        println("webSocketHandler.sessions: ${webSocketHandler.sessions}")
+        println("webSocketHandler.sessions -> mobileSessions: ${webSocketHandler.mobileSessions}")
+        println("webSocketHandler.session: -> webSessions: ${webSocketHandler.webSessions}")
         webSocketHandler.sendMessage(tipo, entregaId, dispositivo)
     }
 }

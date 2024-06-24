@@ -3,6 +3,7 @@ package kellmertrackbackend.repository
 import jakarta.transaction.Transactional
 import kellmertrackbackend.model.constants.EntregaStatus
 import kellmertrackbackend.model.dto.EntregaListDTO
+import kellmertrackbackend.model.dto.EntregasMonitoramentoDTO
 import kellmertrackbackend.model.entities.EntregaEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Modifying
@@ -15,10 +16,7 @@ import java.util.*
 interface EntregaRepository : JpaRepository<EntregaEntity, Int> {
 
     //aplicativo
-    /*@Query(
-        "select * from entregas where veiculo = :veiculo and status = 0", nativeQuery = true
-    )
-    fun findEntregaByVeiculo(veiculo : String?) : EntregaEntity?*/
+    fun findById(entregaId: Int?): EntregaEntity?
 
     @Transactional
     @Modifying
@@ -46,4 +44,14 @@ interface EntregaRepository : JpaRepository<EntregaEntity, Int> {
         "select nextval('entregas_id_seq')", nativeQuery = true
     )
     fun nextId(): Int
+
+    @Query(
+        "select new kellmertrackbackend.model.dto.EntregasMonitoramentoDTO("+
+        " e.id, e.status, o.latitude, o.longitude, o.descricao, e.veiculo.identificacao, e.quantidade" +
+            ") from EntregaEntity e" +
+            " left join ObraEntity o on o.id = e.obra.id"+
+            " where e.status <> 3 "+
+            " order by e.momento desc"
+    )
+    fun buscaEntregasMonitoramento(): List<EntregasMonitoramentoDTO>
 }

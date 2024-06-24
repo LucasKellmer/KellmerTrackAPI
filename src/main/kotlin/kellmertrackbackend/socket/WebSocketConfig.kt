@@ -8,12 +8,14 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 
 @Configuration
 @EnableWebSocket
-class WebSocketConfig : WebSocketConfigurer {
+class WebSocketConfig(
+    private val webSocketHandler: WebSocketHandler,
+) : WebSocketConfigurer {
 
-    @Bean
+    /*@Bean
     fun webSocketHandler(): WebSocketHandler {
         return WebSocketHandler()
-    }
+    }*/
 
     @Bean
     fun monitoramentoSocket(webSocketHandler: WebSocketHandler): MonitoramentoSocket {
@@ -21,6 +23,7 @@ class WebSocketConfig : WebSocketConfigurer {
     }
 
     override fun registerWebSocketHandlers(registry: WebSocketHandlerRegistry) {
-        registry.addHandler(webSocketHandler(), "/websocket")
+        registry.addHandler(webSocketHandler, "/websocket")
+            .setAllowedOrigins("*");
     }
 }

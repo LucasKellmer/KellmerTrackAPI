@@ -1,8 +1,5 @@
 package kellmertrackbackend.model.dto
 
-import com.fasterxml.jackson.annotation.JsonFormat
-import kellmertrackbackend.model.constants.EntregaStatus
-import kellmertrackbackend.model.entities.ObraEntity
 import java.util.*
 
 data class EntregaDTO(

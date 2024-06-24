@@ -17,6 +17,8 @@ import kellmertrackbackend.model.dto.EventoDTO
 import kellmertrackbackend.service.EntregaService
 import kellmertrackbackend.service.EventoService
 import kellmertrackbackend.service.RotacaoService
+import kellmertrackbackend.socket.MonitoramentoSocketMsg
+import kellmertrackbackend.socket.SocketMessage
 import org.slf4j.LoggerFactory
 import org.springframework.core.io.ClassPathResource
 import org.springframework.stereotype.Component
@@ -28,7 +30,6 @@ class FirebaseDatabase (
     private val trajetoService: TrajetoService,
     private val entregaService: EntregaService,
     private val eventoService : EventoService,
-    //private var monitoramentoService : MonitoramentoService
 ){
 
     private val log: org.slf4j.Logger = LoggerFactory.getLogger(FirebaseDatabase::class.java)
@@ -36,8 +37,7 @@ class FirebaseDatabase (
     private var listenerRotacao : ListenerRegistration? = null
     private var listnerVeiculos: ListenerRegistration? = null
     private var listnerEntregas: ListenerRegistration? = null
-    //private var listnerVeiculosMonitoramento: MutableList<MonitoramentoFirebaseDTO> = mutableListOf()
-    //private lateinit var monitoramentoSocketMsg: MonitoramentoSocketMsg
+    private lateinit var monitoramentoSocketMsg: MonitoramentoSocketMsg
 
     fun FirebaseDatabase() {
         try {
@@ -148,15 +148,18 @@ class FirebaseDatabase (
     private fun atualizaLocalizacao(localizacao: TrajetoDTO) {
         try {
             trajetoService.salvaTrajeto(localizacao)
-            excluiTrajetoFirebase(localizacao.id)
+            excluiTrajetoFirebase(localizacao.id!!)
+            val msg = SocketMessage("LOCALIZACAO",localizacao.toString())
+            monitoramentoSocketMsg.enviaMensagemWebClient(msg)
         } catch (e: Exception) {
             log.info("Erro ao gravar trajeto ${e.message}")
         }
     }
+
     private fun atualizaRotacao(rotacao : RotacaoDTO){
         try {
             rotacaoService.salvaRotacao(rotacao)
-            excluiRotacaoFirebase(rotacao.id)
+            excluiRotacaoFirebase(rotacao.id!!)
         } catch (e:Exception){
             log.info("Erro ao gravar rotacao ${e.message}")
         }
@@ -165,7 +168,9 @@ class FirebaseDatabase (
     private fun atualizaEntrega(entrega : EntregaFirebaseDTO){
         try {
             entregaService.salvaEntrega(entrega)
-            //excluiEntregaFirebase(entrega.id.toString())
+            excluiEntregaFirebase(entrega.id.toString())
+            val msg = SocketMessage("ENTREGA",entrega.toString())
+            monitoramentoSocketMsg.enviaMensagemWebClient(msg)
         }catch (e:Exception){
             log.info("Erro ao gravar entrega ${e.message}")
         }
@@ -203,9 +208,9 @@ class FirebaseDatabase (
         }
     }
 
-    /*fun setSocketMsg(monitoramentoSocketMsg: MonitoramentoSocketMsg) {
+    fun setSocketMsg(monitoramentoSocketMsg: MonitoramentoSocketMsg) {
         this.monitoramentoSocketMsg = monitoramentoSocketMsg
-    }*/
+    }
 
     fun fechaListeners() {
         listenerTrajeto?.remove()
@@ -233,7 +238,7 @@ class FirebaseDatabase (
     private fun gravaTodasLocalizacoes(localizacao: TrajetoDTO){
         try{
             trajetoService.salvaTrajeto(localizacao)
-            excluiTrajetoFirebase(localizacao.id)
+            excluiTrajetoFirebase(localizacao.id!!)
         }catch (e:Exception){
             log.info("Erro ao gravar trajeto ${e.message}")
         }
@@ -242,7 +247,7 @@ class FirebaseDatabase (
     private fun gravaTodasRotacoes(rotacao : RotacaoDTO){
         try{
             rotacaoService.salvaRotacao(rotacao)
-            excluiRotacaoFirebase(rotacao.id)
+            excluiRotacaoFirebase(rotacao.id!!)
         }catch (e:Exception){
             log.info("Erro ao gravar rotacao ${e.message}")
         }
@@ -263,7 +268,7 @@ class FirebaseDatabase (
     private fun gravaTodasEntregas(entrega : EntregaFirebaseDTO){
         try{
             entregaService.salvaEntrega(entrega)
-            //excluiEntregaFirebase(entrega.id.toString())
+            excluiEntregaFirebase(entrega.id.toString())
         }catch (e:Exception){
             log.info("Erro ao gravar entregas ${e.message}")
         }
@@ -284,7 +289,7 @@ class FirebaseDatabase (
     private fun gravaTodosEventos(evento : EventoDTO){
         try{
             eventoService.salvaEvento(evento)
-            excluiEventoFirebase(evento.id.toString())
+            excluiEventoFirebase(evento.id)
         }catch (e:Exception){
             log.info("Erro ao gravar eventos ${e.message}")
         }

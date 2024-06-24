@@ -30,12 +30,19 @@ class EntregaMapper(
     }
 
     fun fromEntregaFirebaseDTOtoEntity(entrega : EntregaFirebaseDTO) : EntregaEntity{
+        val status = when (entrega.status) {
+            0 -> EntregaStatus.PENDENTE
+            1 -> EntregaStatus.TRANSITO
+            2 -> EntregaStatus.ENTREGUE
+            3 -> EntregaStatus.FINALIZADO
+            else -> throw IllegalArgumentException("Unknown status value: ${entrega.status}")
+        }
         return EntregaEntity(
             id = entrega.id!!,
             momento = entrega.momento,
             veiculo = veiculoRepository.findByIdentificacao(entrega.veiculo),
             obra = obraRepository.findByIdOrNull(entrega.obraId),
-            status = EntregaStatus.PENDENTE,
+            status = status,
             quantidade = entrega.quantidade.toDouble(),
             dataSaidaUsina = entrega.dataSaidaUsina,
             dataChegadaUsina = entrega.dataEntradaUsina,
