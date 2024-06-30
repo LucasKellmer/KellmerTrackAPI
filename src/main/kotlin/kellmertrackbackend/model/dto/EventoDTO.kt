@@ -5,6 +5,7 @@ import java.util.*
 data class EventoDTO(
     val id : String,
     val entregaId : Int?,
+    val contrato : String?,
     val momento : Date,
     val latitude : Double?,
     val longitude : Double?,

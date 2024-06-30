@@ -9,10 +9,10 @@ data class EntregaConsumoEntity(
     @Id
     val id : UUID,
     val momento : Date?,
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "entrega_id")
     val entrega : EntregaEntity?,
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "veiculo")
     val veiculo : VeiculoEntity?,
     @Column(name = "momento_consumo")

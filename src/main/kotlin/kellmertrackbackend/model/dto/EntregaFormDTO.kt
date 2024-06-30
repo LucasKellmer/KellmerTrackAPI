@@ -1,6 +1,5 @@
 package kellmertrackbackend.model.dto
 
-import kellmertrackbackend.model.constants.EntregaStatus
 import java.util.*
 
 data class EntregaFormDTO(
@@ -8,7 +7,7 @@ data class EntregaFormDTO(
     val momento: Date,
     val veiculo : String,
     val obra : Int,
-    val quantidade : Double
+    val quantidade : Double,
+    val contrato : String,
 ) {
-
 }

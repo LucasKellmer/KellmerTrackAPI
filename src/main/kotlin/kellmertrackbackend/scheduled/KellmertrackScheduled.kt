@@ -35,6 +35,7 @@ class KellmertrackScheduled (
         val entregasNaoConsumidas = entregasConsumo.findEntregasNaoConsumidas()
         if(entregasNaoConsumidas.isNotEmpty()){
             entregasNaoConsumidas.forEach { entrega ->
+                println("Entregas não consumidas:")
                 println(entrega)
                 if (entrega != null) {
                     val dispositivo = dispositivoRepository.findByVeiculoIdentificacao(entrega.veiculo?.identificacao)

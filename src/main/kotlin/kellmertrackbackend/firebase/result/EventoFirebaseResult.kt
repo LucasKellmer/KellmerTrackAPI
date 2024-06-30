@@ -13,6 +13,7 @@ class EventoFirebaseResult : FirebaseResult<EventoDTO>{
         return EventoDTO(
             id = doc.getString("id")!!,
             entregaId = doc.getString("entregaId")?.toInt()!!,
+            contrato = doc.getString("contrato")!!,
             momento = cal.time,
             latitude = doc.getDouble("latitude"),
             longitude = doc.getDouble("longitude"),

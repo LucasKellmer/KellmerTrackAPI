@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
+import jakarta.persistence.ManyToOne
 import jakarta.persistence.OneToOne
 import java.util.Date
 import java.util.UUID
@@ -13,13 +14,16 @@ import java.util.UUID
 data class EventoEntity(
     @Id
     val id : String,
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "entrega_id")
     val entregaId : EntregaEntity?,
+    @ManyToOne
+    @JoinColumn(name = "contrato")
+    val contrato : ContratoEntity?,
     val momento : Date,
     val latitude : Double?,
     val longitude : Double?,
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "veiculo")
     val veiculo : VeiculoEntity?,
     val tipo : String

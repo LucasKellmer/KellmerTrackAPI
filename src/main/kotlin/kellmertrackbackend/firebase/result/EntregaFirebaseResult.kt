@@ -13,10 +13,11 @@ class EntregaFirebaseResult : FirebaseResult<EntregaFirebaseDTO>{
         return EntregaFirebaseDTO(
             id = doc.getLong("id")!!.toInt(),
             momento = cal.time,
-            obraId = doc.getLong("obraId")!!.toInt(),
             status = doc.getLong("status")!!.toInt(),
             veiculo = doc.getString("veiculo").toString(),
+            contrato = doc.getString("contrato").toString(),
             quantidade = doc.getLong("quantidade")!!.toInt(),
+            quantidadeEntregue = doc.getLong("quantidadeEntregue")!!.toInt(),
             dataEntradaUsina = doc.getDate("dataEntradaUsina"),
             dataSaidaUsina = doc.getDate("dataSaidaUsina"),
             dataEntradaObra = doc.getDate("dataEntradaObra"),

@@ -1,8 +1,5 @@
 package kellmertrackbackend.model.dto
 
-import kellmertrackbackend.model.constants.EntregaStatus
-
-
 data class ObraDTO(
     val id : Int,
     val descricao : String,

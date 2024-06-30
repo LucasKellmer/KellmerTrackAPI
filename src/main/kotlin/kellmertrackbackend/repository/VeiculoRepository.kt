@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository
 interface VeiculoRepository : JpaRepository<VeiculoEntity, String>{
 
     //front end e aplicativo
-    fun findByIdentificacao(identificacao : String?) : VeiculoEntity?
+    fun findByIdentificacao(identificacao : String?) : VeiculoEntity
 
     //front end
 

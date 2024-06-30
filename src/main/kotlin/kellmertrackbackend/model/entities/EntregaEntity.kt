@@ -11,14 +11,15 @@ data class EntregaEntity(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id : Int,
     val momento : Date,
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "veiculo", nullable = false)
-    val veiculo : VeiculoEntity?,
-    @OneToOne
-    @JoinColumn(name = "obra_id", nullable = false)
-    val obra : ObraEntity?,
+    val veiculo : VeiculoEntity,
+    @ManyToOne
+    @JoinColumn(name = "contrato", nullable = false)
+    val contrato : ContratoEntity,
     val status : EntregaStatus?,
     val quantidade : Double,
+    val quantidadeEntregue : Double? = null,
     val dataChegadaUsina : Date? = null,
     val dataSaidaUsina : Date? = null,
     val dataChegadaObra : Date? = null,

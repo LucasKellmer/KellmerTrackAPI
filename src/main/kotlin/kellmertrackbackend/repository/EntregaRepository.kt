@@ -26,12 +26,12 @@ interface EntregaRepository : JpaRepository<EntregaEntity, Int> {
     //front end
     @Query(
         "select new kellmertrackbackend.model.dto.EntregaListDTO(" +
-                "e.id, e.momento,e.veiculo.identificacao, e.obra.id, e.obra.descricao, e.status, e.quantidade"+
+                "e.id, e.momento,e.veiculo.identificacao, e.contrato.obraId.id, e.contrato.obraId.descricao, e.status, e.quantidade"+
                 ") from EntregaEntity e " +
                 " where e.momento between :dataIni and :dataFim " +
-                " and e.obra.descricao like upper(concat('%',:descricao, '%'))" +
+                " and e.contrato.obraId.descricao like upper(concat('%',:descricao, '%'))" +
                 " and (e.status = :status or :status is null)"+
-                " order by e.obra.descricao asc"
+                " order by e.contrato.obraId.descricao asc"
     )
     fun pesquisaEntregas(
         @Param("descricao") descricao: String,
@@ -47,9 +47,9 @@ interface EntregaRepository : JpaRepository<EntregaEntity, Int> {
 
     @Query(
         "select new kellmertrackbackend.model.dto.EntregasMonitoramentoDTO("+
-        " e.id, e.status, o.latitude, o.longitude, o.descricao, e.veiculo.identificacao, e.quantidade" +
+        " e.id, e.status, e.contrato.obraId.latitude, e.contrato.obraId.longitude, e.contrato.obraId.descricao, e.veiculo.identificacao, e.quantidade" +
             ") from EntregaEntity e" +
-            " left join ObraEntity o on o.id = e.obra.id"+
+            //" left join ObraEntity o on o.id = e.obra.id"+
             " where e.status <> 3 "+
             " order by e.momento desc"
     )
