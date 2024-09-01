@@ -6,7 +6,6 @@ import kellmertrackbackend.repository.DispositivoRepository
 import kellmertrackbackend.repository.EntregaRepository
 import kellmertrackbackend.repository.VeiculoRepository
 import org.springframework.stereotype.Component
-import java.util.*
 
 @Component
 class RotacaoMapper(
@@ -17,11 +16,14 @@ class RotacaoMapper(
     fun fromDTOtoRotacaoEntity(rotacao: RotacaoDTO): RotacaoEntity {
         return RotacaoEntity(
             id = rotacao.id!!,
-            dispositivo = dispositivoRepository.findDispositivoById(rotacao.dispositivoId!!),
+            dispositivo = dispositivoRepository.findByNumeroInterno(rotacao.dispositivo)!!,
             veiculo = veiculoRepository.findByIdentificacao(rotacao.veiculo),
             momento = rotacao.momento!!,
             rpm = rotacao.rpm!!,
-            entregaId = entregaRepository.findById(rotacao.entregaId)
+            entregaId = entregaRepository.findById(rotacao.entregaId),
+            bateria = rotacao.bateria,
+            temperatura = rotacao.temperatura,
+            direcao = rotacao.direcao,
         )
     }
 
@@ -31,11 +33,14 @@ class RotacaoMapper(
             rotacaoDTO.add(
                 RotacaoDTO(
                     id = it.id,
-                    dispositivoId = it.dispositivo.id,
+                    dispositivo = it.dispositivo.numeroInterno,
                     veiculo = it.veiculo?.identificacao,
                     momento = it.momento,
                     rpm = it.rpm,
-                    entregaId = it.entregaId?.id
+                    entregaId = it.entregaId?.id,
+                    bateria = it.bateria,
+                    temperatura = it.temperatura,
+                    direcao = it.direcao,
                 )
             )
         }

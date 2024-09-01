@@ -6,6 +6,8 @@ import com.gargoylesoftware.htmlunit.Page
 import com.gargoylesoftware.htmlunit.WebClient
 import com.gargoylesoftware.htmlunit.html.HtmlPage
 import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput
+import io.github.bonigarcia.wdm.WebDriverManager
+import io.github.bonigarcia.wdm.managers.ChromeDriverManager
 import kellmertrackbackend.model.dto.AlvaraConstrucaoDTO
 import kellmertrackbackend.model.dto.DispositivoDTO
 import kellmertrackbackend.model.dto.DispositivoFormDTO
@@ -15,11 +17,20 @@ import kellmertrackbackend.model.entities.mapper.DispositivoMapper
 import kellmertrackbackend.model.mapper.AlvaraConstrucaoMapper
 import kellmertrackbackend.repository.AlvaraConstrucaoRepository
 import kellmertrackbackend.repository.DispositivoRepository
+import net.sourceforge.tess4j.ITesseract
+import net.sourceforge.tess4j.Tesseract
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
+import org.openqa.selenium.By
+import org.openqa.selenium.OutputType
+import org.openqa.selenium.chrome.ChromeDriver
+import org.openqa.selenium.chrome.ChromeDriverService
+import org.openqa.selenium.chrome.ChromeOptions
+import org.openqa.selenium.io.FileHandler
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import java.io.*
+import java.util.concurrent.TimeUnit
 
 
 @Service
@@ -44,20 +55,20 @@ class DispositivoService(
         return dispositivoRepository.pesquisaDispositivos(numeroInterno, motorista, veiculo, mac)
     }
 
-    fun findDispositivoById(id: Int): DispositivoFormDTO? {
-        return dispositivoMapper.toDispositivoFormDTO(dispositivoRepository.findByIdOrNull(id))
+    fun findByNumeroInternoFormDTO(numeroInterno: String): DispositivoFormDTO? {
+        return dispositivoMapper.toDispositivoFormDTO(dispositivoRepository.findByNumeroInterno(numeroInterno))
     }
 
     fun salvaDispositivo(dispositivo: DispositivoFormDTO): DispositivoEntity {
         val dispositivoEntity = dispositivoMapper.toDispositivoEntity(dispositivo)
         try {
-            if (dispositivoRepository.findByNumeroInterno(dispositivo.numeroInterno) != null && dispositivo.id == 0)
+            if (dispositivoRepository.findByNumeroInterno(dispositivo.numeroInterno) != null)
                 throw InvalidRegistryException("Já existe um dispositivo com esse numero interno cadastrado! Verifique!")
-            if (dispositivoRepository.findByMac(dispositivo.mac) != null && dispositivo.id == 0)
+            if (dispositivoRepository.findByMac(dispositivo.mac) != null)
                 throw InvalidRegistryException("Já existe um um dispositivo com esse mac cadastrado! Verifique!")
-            if (dispositivoRepository.findByVeiculoIdentificacao(dispositivo.veiculo) != null && dispositivo.id == 0)
+            if (dispositivoRepository.findByVeiculoIdentificacao(dispositivo.veiculo) != null)
                 throw InvalidRegistryException("Já existe um dispositivo vinculado a esse veículo cadastrado! Verifique!")
-            if (dispositivoRepository.findByMotoristaId(dispositivo.motoristaId) != null && dispositivo.id == 0)
+            if (dispositivoRepository.findByMotoristaId(dispositivo.motoristaId) != null)
                 throw InvalidRegistryException("Já existe um dispositivo vinculado a esse motorista cadastrado! Verifique!")
             return dispositivoRepository.save(dispositivoEntity)
         } catch (e: Exception) {
@@ -89,13 +100,47 @@ class DispositivoService(
         return dispositivoRepository.findByMotoristaId(motorista)
     }
 
-    fun nextId(): Int{
-        return dispositivoRepository.nextId()
+    fun limpaDataVinculo(numeroInterno: String){
+        dispositivoRepository.limpaDataVinculo(numeroInterno)
     }
 
-    fun limpaDataVinculo(id: Int){
-        dispositivoRepository.limpaDataVinculo(id)
+    fun captcha(){
+        //WebDriverManager.chromedriver().setup()
+
+        val service = ChromeDriverService.createDefaultService()
+        val options = ChromeOptions()
+
+        val driver = ChromeDriver(service, options)
+
+        //driver.manage().window().maximize()
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS)
+
+        driver.get("https://captcha.com/demos/features/captcha-demo.aspx")
+
+        val imageElement = driver.findElement(By.xpath("//*[@id='demoCaptcha_CaptchaImage']"))
+
+        val src = imageElement.getScreenshotAs(OutputType.FILE)
+
+        val path = "C:\\Users\\TheBabaYaga\\Documents\\kellmertrackAPI\\src\\main\\kotlin\\kellmertrackbackend\\capchaImages\\captcha.png"
+
+        FileHandler.copy(src, File(path))
+
+        Thread.sleep(2000)
+
+        val image: ITesseract = Tesseract()
+
+        image.setDatapath("C:\\Users\\TheBabaYaga\\Desktop\\Tesseract\\tesseract-ocr-tesseract-e3f272b\\tessdata")
+
+        val str = image.doOCR(File(path))
+
+        println("image OCR done")
+        println(str)
+
+        Thread.sleep(10000)
+
+        driver.findElement(By.id("captchaCode")).sendKeys(str)
     }
+
 
     /*fun baixaAlvaraConstrucao() {
         val webClient = WebClient()

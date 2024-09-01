@@ -14,8 +14,6 @@ import org.springframework.stereotype.Repository
 interface DispositivoRepository : JpaRepository<DispositivoEntity, Int> {
 
     //aplicativo
-    fun findDispositivoById(id: Int): DispositivoEntity
-
     fun findByNumeroInterno(numeroInterno : String?) : DispositivoEntity?
 
     fun findByMac(mac : String?) : DispositivoEntity?
@@ -26,19 +24,19 @@ interface DispositivoRepository : JpaRepository<DispositivoEntity, Int> {
 
     @Modifying
     @Transactional
-    @Query(value = "update track_dispositivos_rotacao set data_vinculo = current_date where numero_interno = :numeroInterno", nativeQuery = true)
+    @Query(value = "update dispositivos set data_vinculo = current_date where numero_interno = :numeroInterno", nativeQuery = true)
     fun atualizaDataVinculo(numeroInterno: String?)
 
     //front end
     @Query(
         "select new kellmertrackbackend.model.dto.DispositivoListDTO(" +
-                " d.id, d.numeroInterno, d.mac, d.modelo, d.veiculo.identificacao, d.dataVinculo, d.motorista.id,  d.motorista.nome, d.empresa.codigo" +
+                " d.numeroInterno, d.mac, d.modelo, d.veiculo.identificacao, d.dataVinculo, d.motorista.id,  d.motorista.nome, d.empresa.codigo" +
                 ") from DispositivoEntity d" +
                 " where (d.veiculo.identificacao = :veiculoId or : veiculoId = 'todos')" +
                 " and (d.numeroInterno like upper(concat(:numeroInterno, '%')) or : numeroInterno = '')" +
                 " and (d.mac like upper(concat('%',:mac, '%')) or : mac = '')" +
                 " and (d.motorista.id = :motoristaId or : motoristaId = 999)" +
-                " order by d.id asc"
+                " order by d.numeroInterno"
     )
     fun pesquisaDispositivos(
         @Param("numeroInterno") numeroInterno: String,
@@ -47,14 +45,9 @@ interface DispositivoRepository : JpaRepository<DispositivoEntity, Int> {
         @Param("mac") mac : String
     ): List<DispositivoListDTO>
 
-    @Query(
-        "select nextval('track_dispositivos_rotacao_id_seq')", nativeQuery = true
-    )
-    fun nextId(): Int
-
     @Modifying
-    @Query(value = "update track_dispositivos_rotacao set data_vinculo = null where id = :id", nativeQuery = true)
-    fun limpaDataVinculo(id: Int)
+    @Query(value = "update dispositivos set data_vinculo = null where numero_interno = :id", nativeQuery = true)
+    fun limpaDataVinculo(id: String)
 
 
 }

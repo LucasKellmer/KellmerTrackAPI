@@ -39,7 +39,7 @@ class MonitoramentoService(
             latitude = null,
             longitude = null,
             velocidade = null,
-            dispositivoId = null,
+            dispositivo = null,
             veiculoId = null,
             motorista = null
         )
@@ -48,11 +48,14 @@ class MonitoramentoService(
     private fun criaRotacao() : RotacaoDTO {
         return RotacaoDTO(
             id = null,
-            dispositivoId = null,
+            dispositivo = null,
             veiculo = null,
             momento = null,
             rpm = null,
-            entregaId = null
+            entregaId = null,
+            bateria = null,
+            temperatura = null,
+            direcao = null
         )
     }
 

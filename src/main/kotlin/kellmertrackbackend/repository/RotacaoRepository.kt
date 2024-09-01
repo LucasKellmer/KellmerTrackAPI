@@ -10,12 +10,10 @@ import java.util.*
 @Repository
 interface RotacaoRepository : JpaRepository<RotacaoEntity, UUID> {
 
-    //RotacaoEntity
-
     @Query(
         "select new kellmertrackbackend.model.dto.RotacaoDTO(" +
-            " r.id, r.dispositivo.id, r.veiculo.identificacao, \n"+
-            " r.momento, r.rpm, r.entregaId.id \n"+
+            " r.id, r.dispositivo.numeroInterno, r.veiculo.identificacao, \n"+
+            " r.momento, r.rpm, r.entregaId.id, r.bateria, r.temperatura, r.direcao\n"+
             ") from RotacaoEntity r \n"+
             " where r.veiculo.identificacao = :identificacao \n"+
             " order by r.momento desc limit 1"
@@ -23,16 +21,8 @@ interface RotacaoRepository : JpaRepository<RotacaoEntity, UUID> {
     //@Query(name = "buscaUltimaRotacao", nativeQuery = true)
     fun buscaUltimaRotacao(identificacao: String): RotacaoDTO?
 
-    /*@Query(
-        "select new kellmertrackbackend.model.dto.RotacaoDTO(" +
-            " r.id, r.dispositivo.id, r.veiculo.identificacao,\n"+
-            " r.momento, r.rpm, r.entregaId.id \n"+
-            ") from RotacaoEntity r \n"+
-            " left join EntregaEntity e on e.id = r.entregaId.id\n"+
-            " where e.id = :entregaId"
-    )*/
     @Query(
-        "SELECT id, dispositivo_id, veiculo, momento, rpm, entrega_id \n" +
+        "SELECT id, dispositivo, veiculo, momento, rpm, entrega_id, bateria, temperatura, direcao \n" +
                 "FROM ( \n" +
                 "    SELECT *, LAG(rpm) OVER (ORDER BY momento) AS rpm_anterior \n" +
                 "    FROM rotacoes \n" +
@@ -42,4 +32,12 @@ interface RotacaoRepository : JpaRepository<RotacaoEntity, UUID> {
                 "ORDER BY momento", nativeQuery = true
     )
     fun buscaRotacaoByEntrega(entregaId: Int): List<RotacaoEntity>?
+
+    @Query("select new kellmertrackbackend.model.dto.RotacaoDTO(" +
+            " r.id, r.dispositivo.numeroInterno, r.veiculo.identificacao, r.momento, r.rpm, r.entregaId.id," +
+            " r.bateria, r.temperatura, r.direcao) from RotacaoEntity r"+
+            " where r.momento between :dataIni and :dataFim and r.veiculo.identificacao = :veiculo"+
+            " order by r.momento"
+    )
+    fun buscaRotacaoByData(dataIni:Date, dataFim:Date, veiculo: String) : List<RotacaoDTO>
 }

@@ -8,9 +8,10 @@ import java.util.*
 data class ComprovanteEntity(
     @Id
     val id : String,
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "entrega_id")
     val entregaId : EntregaEntity,
+    //val contrato : String,
     val recebedor : String,
     val momento : Date,
     val latitude : Double,

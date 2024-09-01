@@ -91,20 +91,39 @@
 				<artifactId>okhttp</artifactId>
 				<version>4.9.3</version>
 			</dependency>
-		<dependency>
+		<!--<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-api</artifactId>
 			<version>4.14.1</version>
-		</dependency>
+		</dependency>-->
+
+		<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>selenium-chrome-driver</artifactId>
-			<version>4.1.1</version>
+			<artifactId>selenium-java</artifactId>
+			<version>4.22.0</version>
 		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
 		<dependency>
 			<groupId>io.github.bonigarcia</groupId>
 			<artifactId>webdrivermanager</artifactId>
-			<version>5.0.3</version>
+			<version>5.9.1</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>net.sourceforge.tess4j</groupId>
+			<artifactId>tess4j</artifactId>
+			<version>5.4.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.bytedeco/tesseract -->
+		<dependency>
+			<groupId>org.bytedeco</groupId>
+			<artifactId>tesseract</artifactId>
+			<version>5.3.1-1.5.9</version>
 		</dependency>
 
 		<dependency>

@@ -17,8 +17,8 @@ class TrajetoMapper(
     fun fromDTOtoTrajetoEntity(trajeto: TrajetoDTO): TrajetoEntity {
         return TrajetoEntity(
             id = UUID.fromString(trajeto.id),
-            dispositivoId = dispositivoRepository.findDispositivoById(trajeto.dispositivoId!!),
-            veiculos = veiculoRepository.findByIdentificacao(trajeto.veiculoId),
+            dispositivo = dispositivoRepository.findByNumeroInterno(trajeto.dispositivo)!!,
+            veiculo = veiculoRepository.findByIdentificacao(trajeto.veiculoId),
             momento = trajeto.momento!!,
             latitude = trajeto.latitude!!,
             longitude = trajeto.longitude!!,
@@ -27,12 +27,12 @@ class TrajetoMapper(
     }
 
     fun fromEntityToMonitoramentoTrajetoDTO(trajeto : TrajetoEntity?) : MonitoramentoTrajetoDTO?{
-        val dispositivo = dispositivoRepository.findDispositivoById(trajeto!!.dispositivoId.id)
+        val dispositivo = dispositivoRepository.findByNumeroInterno(trajeto!!.dispositivo.numeroInterno)
         return MonitoramentoTrajetoDTO(
             id = trajeto.id.toString(),
-            dispositivoId = trajeto.dispositivoId.id,
-            veiculoId = trajeto.veiculos!!.identificacao,
-            motorista = dispositivo.motorista.nome,
+            dispositivo = trajeto.dispositivo.numeroInterno,
+            veiculoId = trajeto.veiculo!!.identificacao,
+            motorista = dispositivo?.motorista?.nome,
             momento = trajeto.momento,
             latitude = trajeto.latitude,
             longitude = trajeto.longitude,

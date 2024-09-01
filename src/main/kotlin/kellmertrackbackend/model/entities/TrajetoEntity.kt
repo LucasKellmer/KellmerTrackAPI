@@ -4,16 +4,16 @@ import jakarta.persistence.*
 import java.util.*
 
 @Entity
-@Table(name = "sensortrack_trajetos")
+@Table(name = "trajetos")
 data class TrajetoEntity (
     @Id
     val id : UUID,
     @ManyToOne
-    @JoinColumn(name = "dispositivo_id")
-    val dispositivoId : DispositivoEntity,
+    @JoinColumn(name = "dispositivo")
+    val dispositivo : DispositivoEntity,
     @ManyToOne
     @JoinColumn(name = "veiculo_id")
-    val veiculos : VeiculoEntity?,
+    val veiculo : VeiculoEntity?,
     val momento : Date,
     val latitude : Double,
     val longitude : Double,

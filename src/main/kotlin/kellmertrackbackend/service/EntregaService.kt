@@ -21,10 +21,6 @@ class EntregaService(
         entregaRepository.atualizaEntregaStatus(id, status)
     }
 
-    fun salvaComprovante(comprovante : ComprovanteDTO){
-        comprovanteService.salvaComprovante(comprovante)
-    }
-
     //firebase
     fun salvaEntrega(entrega : EntregaFirebaseDTO){
         val entregaEntity = entregaMapper.fromEntregaFirebaseDTOtoEntity(entrega)
@@ -47,6 +43,14 @@ class EntregaService(
 
     fun findEntregaById(id: Int): EntregaDTO? {
         return entregaMapper.toEntregaDTO(entregaRepository.findByIdOrNull(id))
+    }
+
+    fun findEntregaByData(dataIni : Date, dataFim: Date): List<EntregaDTO> {
+        val entregaList : MutableList<EntregaDTO> = mutableListOf()
+        entregaRepository.findByMomentoBetween(dataIni, dataFim).forEach { entrega ->
+            entregaMapper.toEntregaDTO(entrega)?.let { entregaList.add(it) }
+        }
+        return entregaList
     }
 
     fun salvaEntrega(entrega: EntregaFormDTO): EntregaEntity {

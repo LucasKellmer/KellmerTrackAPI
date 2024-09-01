@@ -23,11 +23,10 @@ class DispositivoMapper(
     fun toDispositivoEntity(dispositivo : DispositivoFormDTO) : DispositivoEntity{
 
         return DispositivoEntity(
-            id = dispositivo.id,
             numeroInterno = dispositivo.numeroInterno,
             motorista = motoristaRepository.findByIdOrNull(dispositivo.motoristaId)!!,
             veiculo = veiculoRepository.findByIdentificacao(dispositivo.veiculo)!!,
-            modelo = DispositivoModelo.BLAZONLABS,//dispositivo.modelo,
+            modelo = dispositivo.modelo,
             mac = dispositivo.mac,
             dataVinculo = dispositivo.dataVinculo,
             empresa = empresaRepository.findByCodigo(dispositivo.empresa)
@@ -37,11 +36,10 @@ class DispositivoMapper(
     fun toDispositivoFormDTO(dispositivo : DispositivoEntity?) : DispositivoFormDTO?{
         return dispositivo?.let {
             DispositivoFormDTO(
-                id = it.id,
                 numeroInterno = it.numeroInterno,
                 motoristaId = it.motorista.id,
                 //motoristaNome = it.motorista.nome,
-                modelo = it.modelo.ordinal,
+                modelo = it.modelo,
                 veiculo = it.veiculo.identificacao,
                 mac = it.mac,
                 dataVinculo = it.dataVinculo,
@@ -53,7 +51,6 @@ class DispositivoMapper(
     fun toDispositivoDTO(dispositivo : DispositivoEntity?) : DispositivoDTO?{
         return dispositivo?.let {
             DispositivoDTO(
-                id = it.id,
                 numeroInterno = it.numeroInterno,
                 mac = it.mac,
                 modelo = it.modelo,

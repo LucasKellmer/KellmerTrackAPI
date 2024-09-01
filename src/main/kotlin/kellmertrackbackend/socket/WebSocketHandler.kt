@@ -60,6 +60,14 @@ class WebSocketHandler (
         sessions.add(session)*/
     }
 
+    override fun afterConnectionClosed(session: WebSocketSession, status: CloseStatus) {
+        println("========================== SESSÃO FECHADA: $session")
+
+        // Removendo a sessão dos mapas mobileSessions e webSessions
+        mobileSessions.entries.removeIf { it.value.id == session.id }
+        webSessions.entries.removeIf { it.value.id == session.id }
+    }
+
     override fun handleTextMessage(session: WebSocketSession, message: TextMessage) {
         println("Mensagem recebida: ${message.payload}")
 

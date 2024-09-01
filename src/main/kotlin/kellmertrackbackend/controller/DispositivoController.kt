@@ -27,8 +27,8 @@ class DispositivoController(
     }
 
     @GetMapping("dispositivo")
-    fun findDispositivoById(@RequestParam id : Int) : ResponseEntity<DispositivoFormDTO?>{
-        return ResponseEntity.ok(dispositivoService.findDispositivoById(id))
+    fun findDispositivoByNumeroInterno(@RequestParam numeroInterno: String) : ResponseEntity<DispositivoFormDTO?>{
+        return ResponseEntity.ok(dispositivoService.findByNumeroInternoFormDTO(numeroInterno))
     }
 
     @PostMapping("dispositivo")
@@ -64,15 +64,10 @@ class DispositivoController(
         return dispositivoService.findByMotorista(motorista)
     }
 
-    @GetMapping("dispositivo-next-id")
-    fun nextId() : ResponseEntity<Int>{
-        return ResponseEntity.ok(dispositivoService.nextId())
-    }
-
-    @PutMapping("dispositivo-vinculo/{id}")
+    @PutMapping("dispositivo-vinculo/{numeroInterno}")
     @Transactional
-    fun limpaDataVinculo(@PathVariable id : Int) : ResponseEntity<Void>{
-        dispositivoService.limpaDataVinculo(id)
+    fun limpaDataVinculo(@PathVariable numeroInterno : String) : ResponseEntity<Void>{
+        dispositivoService.limpaDataVinculo(numeroInterno)
         return ResponseEntity.ok().build()
     }
 }

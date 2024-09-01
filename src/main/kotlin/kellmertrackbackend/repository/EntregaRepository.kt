@@ -24,6 +24,9 @@ interface EntregaRepository : JpaRepository<EntregaEntity, Int> {
     fun atualizaEntregaStatus(id: Int, status: Int)
 
     //front end
+
+    fun findByMomentoBetween(dataIni: Date, dataFim: Date) : List<EntregaEntity>
+
     @Query(
         "select new kellmertrackbackend.model.dto.EntregaListDTO(" +
                 "e.id, e.momento,e.veiculo.identificacao, e.contrato.obraId.id, e.contrato.obraId.descricao, e.status, e.quantidade"+

@@ -10,7 +10,15 @@ class ComprovanteService (
     private val comprovanteRepository: ComprovanteRepository,
     private val comprovanteMapper: ComprovanteMapper
 ){
-    fun salvaComprovante(comprovante : ComprovanteDTO){
-        comprovanteRepository.save(comprovanteMapper.fromDTOToEntity(comprovante))
+    fun salvaComprovante(comprovantes : List<ComprovanteDTO>) {
+        try {
+            comprovantes.forEach {
+                val comprovanteEntity = comprovanteMapper.fromDTOToEntity(it)
+                comprovanteRepository.save(comprovanteEntity)
+            }
+        } catch (e : Exception) {
+            throw Exception("Não foi possível salvar o comprovante: ${e.stackTrace}")
+        }
+
     }
 }

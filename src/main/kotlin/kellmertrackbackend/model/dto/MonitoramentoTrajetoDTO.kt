@@ -4,7 +4,7 @@ import java.util.*
 
 data class MonitoramentoTrajetoDTO(
     val id : String?,
-    val dispositivoId : Int?,
+    val dispositivo : String?,
     val veiculoId : String?,
     val motorista : String?,
     val momento : Date?,

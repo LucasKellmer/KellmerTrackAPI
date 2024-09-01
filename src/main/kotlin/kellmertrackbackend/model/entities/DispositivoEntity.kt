@@ -5,14 +5,12 @@ import kellmertrackbackend.model.constants.DispositivoModelo
 import java.util.*
 
 @Entity
-@Table(name = "track_dispositivos_rotacao")
+@Table(name = "dispositivos")
 class DispositivoEntity (
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id : Int,
     val numeroInterno : String,
     val mac : String,
-    val modelo : DispositivoModelo,
+    val modelo : String?,
     @OneToOne
     @JoinColumn(name = "veiculo_id", nullable = false)
     val veiculo : VeiculoEntity,

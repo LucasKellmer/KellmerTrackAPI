@@ -16,7 +16,7 @@ class TrajetoFirebaseResult : FirebaseResult<TrajetoDTO> {
             longitude = doc.getDouble("longitude")!!,
             velocidade = doc.getLong("velocidade")?.toInt()!!,
             momento = cal.time,
-            dispositivoId = doc.getLong("dispositivoId")?.toInt()!!, // MUDAR PARA DISPOSITIVO ID AQUI E NA ENTITY DO APLICATIVO
+            dispositivo = doc.getString("dispositivo")!!,
             veiculoId = doc.getString("veiculoId")!!
         )
     }

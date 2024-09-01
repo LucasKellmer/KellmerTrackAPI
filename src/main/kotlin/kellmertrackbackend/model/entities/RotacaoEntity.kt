@@ -7,7 +7,7 @@ import java.util.*
 @NamedNativeQuery(
     name = "buscaUltimaRotacao",
     query = "select cast(r.id as text) as id, r.dispositivo_id,\n"+
-            " r.veiculo, cast(r.momento as timestamp) as momento, r.rpm \n"+
+            " r.veiculo, cast(r.momento as timestamp) as momento, r.rpm, r.bateria, r.temperatura, r.direcao\n"+
             " from rotacoes r \n"+
             " where r.veiculo = :identificacao \n"+
             " order by r.momento desc limit 1 \n",
@@ -33,7 +33,7 @@ data class RotacaoEntity (
     @Id
     val id : String,
     @OneToOne
-    @JoinColumn(name = "dispositivo_id")
+    @JoinColumn(name = "dispositivo")
     val dispositivo : DispositivoEntity,
     @ManyToOne
     @JoinColumn(name = "veiculo")
@@ -42,6 +42,9 @@ data class RotacaoEntity (
     val rpm : Int,
     @ManyToOne
     @JoinColumn(name = "entrega_id")
-    val entregaId : EntregaEntity?
+    val entregaId : EntregaEntity?,
+    val bateria : Int?,
+    val temperatura : Int?,
+    val direcao : Int?
 ){
 }

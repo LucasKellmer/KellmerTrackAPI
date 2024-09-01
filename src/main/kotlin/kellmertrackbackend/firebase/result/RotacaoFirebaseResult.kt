@@ -17,11 +17,13 @@ class RotacaoFirebaseResult : FirebaseResult<RotacaoDTO>{
             rpm = doc.getLong("rpm")?.toInt()!!,
             momento = cal.time,
             veiculo = doc.getString("veiculo")!!,
-            dispositivoId = doc.getLong("dispositivoId")?.toInt()!!,
+            dispositivo = doc.getString("dispositivo")!!,
             entregaId = doc.getLong("entregaId")?.toInt(),
+            bateria = doc.getLong("bateria")?.toInt(),
+            temperatura = doc.getLong("temperatura")?.toInt(),
+            direcao = doc.getLong("direcao")?.toInt(),
         )
     }
-
 
     override fun getResult(query: List<DocumentChange>): List<RotacaoDTO> {
         val list = mutableListOf<RotacaoDTO>()
