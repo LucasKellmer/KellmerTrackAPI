@@ -32,7 +32,7 @@ import java.util.*
 data class RotacaoEntity (
     @Id
     val id : String,
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "dispositivo")
     val dispositivo : DispositivoEntity,
     @ManyToOne

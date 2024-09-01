@@ -22,7 +22,7 @@ class EntregaMapper(
         return EntregaEntity(
             id = entrega.id,
             momento = entrega.momento,
-            veiculo = veiculoRepository.findByIdentificacao(entrega.veiculo),
+            veiculo = veiculoRepository.findByIdentificacao(entrega.veiculo)!!,
             status = EntregaStatus.PENDENTE,
             quantidade = entrega.quantidade,
             contrato = contratoRepository.findById(entrega.contrato).get()
@@ -40,7 +40,7 @@ class EntregaMapper(
         return EntregaEntity(
             id = entrega.id!!,
             momento = entrega.momento,
-            veiculo = veiculoRepository.findByIdentificacao(entrega.veiculo),
+            veiculo = veiculoRepository.findByIdentificacao(entrega.veiculo)!!,
             status = status,
             contrato = contratoRepository.findById(entrega.contrato).get(),
             quantidade = entrega.quantidade.toDouble(),

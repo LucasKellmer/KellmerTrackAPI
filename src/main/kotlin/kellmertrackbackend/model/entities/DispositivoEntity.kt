@@ -11,14 +11,14 @@ class DispositivoEntity (
     val numeroInterno : String,
     val mac : String,
     val modelo : String?,
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "veiculo_id", nullable = false)
     val veiculo : VeiculoEntity,
     val dataVinculo : Date?,
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "motorista_id", nullable = true)
     val motorista : MotoristaEntity,
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "empresa")
     val empresa : EmpresaEntity?,
 )

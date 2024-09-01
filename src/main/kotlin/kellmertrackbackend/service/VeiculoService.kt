@@ -28,10 +28,10 @@ class VeiculoService(
 
     fun salvaVeiculo(veiculo: VeiculoDTO): VeiculoEntity {
         val veiculoEntity = veiculoMapper.toVeiculoEntity(veiculo)
-        try {
+        return try {
             if (veiculoRepository.findByIdentificacao(veiculo.identificacao) != null && veiculo.identificacao.isNotEmpty())
                 throw InvalidRegistryException("Já existe um veículo cadastrado com essa identificação! Verifique!")
-            return veiculoRepository.save(veiculoEntity)
+             veiculoRepository.save(veiculoEntity)
         } catch (e: Exception) {
             throw Exception("Ocorreu um erro ao salvar veiculo! ${e.message}")
         }
