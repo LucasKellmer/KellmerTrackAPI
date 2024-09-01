@@ -47,21 +47,8 @@ class KellmertrackScheduled (
             }
         }
     }
-/*
-    //@Scheduled(cron = "0 10 1 * * *")
-    @Scheduled(fixedRate = 300000)
-    fun atualizaTodasLocalizacoes(){
-        println("CRIANDO LISTENER TODAS LOCALIZAÇÕES")
-        firebase.atualizaTodasLocalizacoes()
-    }
 
-    @Scheduled(cron = "0 10 1 * * *")
-    fun atualizaTodasRotacoes(){
-        println("CRIANDO LISTENER TODAS ROTACOES")
-        firebase.atualizaTodasRotacoes()
-    }
-*/
-    @Scheduled(fixedDelay = 600000)
+    @Scheduled(fixedDelay = 150000)
     fun atualizaTodosRegistroFirebase(){
         println("GRAVANDO TODOS OS EVENTOS")
         firebase.atualizaTodosEventos()
