@@ -20,4 +20,18 @@ class ObraMapper {
             raio = obra.raio
         )
     }
+
+    fun toObraDTO(obra : ObraEntity) : ObraDTO{
+        return ObraDTO(
+            id = obra.id,
+            descricao = obra.descricao,
+            numero = obra.numero,
+            cidade = obra.cidade,
+            bairro = obra.bairro,
+            complemento = obra.complemento,
+            latitude = obra.latitude,
+            longitude = obra.longitude,
+            raio = obra.raio
+        )
+    }
 }

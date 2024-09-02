@@ -9,12 +9,12 @@ data class ContratoEntity(
     val numero: String,
     @ManyToOne
     @JoinColumn(name = "empresa")
-    val empresa : EmpresaEntity,
+    val empresa : EmpresaEntity?,
     @ManyToOne
     @JoinColumn(name = "obra_id")
-    val obraId : ObraEntity,
+    val obraId : ObraEntity?,
     @ManyToOne
     @JoinColumn(name = "cliente")
-    val cliente: ClienteEntity,
+    val cliente: ClienteEntity?,
 ){
 }

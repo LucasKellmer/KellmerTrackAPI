@@ -66,7 +66,7 @@ class DispositivoMapper(
     fun criaEmpresaDTO(empresa : EmpresaEntity): EmpresaDTO{
         return EmpresaDTO(
             codigo = empresa.codigo,
-            nome = empresa.nome,
+            descricao = empresa.nome,
             latitude = empresa.latitude,
             longitude = empresa.longitude,
             raio = empresa.raio

@@ -1,7 +1,7 @@
 package kellmertrackbackend.model.dto
 
 data class ObraDTO(
-    val id : Int,
+    val id : Int?,
     val descricao : String,
     val cidade : String,
     val bairro : String,

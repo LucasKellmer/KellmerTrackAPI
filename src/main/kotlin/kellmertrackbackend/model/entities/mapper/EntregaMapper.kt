@@ -72,9 +72,9 @@ class EntregaMapper(
     fun criaContratoDTO(contrato : ContratoEntity) : ContratoDTO{
         return ContratoDTO(
             numero = contrato.numero,
-            obra = criaObraDTO(contrato.obraId),
-            cliente = criaClienteDTO(contrato.cliente),
-            empresa = contrato.empresa.codigo
+            obra = criaObraDTO(contrato.obraId!!),
+            cliente = criaClienteDTO(contrato.cliente!!),
+            empresa = contrato.empresa!!.codigo
         )
     }
 

@@ -7,7 +7,7 @@ import jakarta.persistence.*
 data class ObraEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id : Int,
+    val id : Int? = null,
     val descricao : String,
     val cidade : String,
     val bairro : String,

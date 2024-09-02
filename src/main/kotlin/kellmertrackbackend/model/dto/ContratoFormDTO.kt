@@ -1,9 +1,9 @@
 package kellmertrackbackend.model.dto
 
-data class ContratoDTO(
+data class ContratoFormDTO(
     val numero : String,
-    val obra: ObraDTO?,
+    val obra: Int,
     val empresa : String,
-    val cliente : ClienteDTO?
+    val cliente : Int
 ) {
 }
