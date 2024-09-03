@@ -21,8 +21,8 @@ class ClienteController(
     }
 
     @PostMapping("clientes")
-    fun salvaCliente(@RequestBody empresa : ClienteDTO): ResponseEntity<ClienteEntity> {
-        return ResponseEntity.ok(clienteService.salvaCliente(empresa))
+    fun salvaCliente(@RequestBody cliente : ClienteDTO): ResponseEntity<ClienteEntity> {
+        return ResponseEntity.ok(clienteService.salvaCliente(cliente))
     }
 
     @GetMapping("clientes")

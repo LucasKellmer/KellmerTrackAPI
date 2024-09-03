@@ -16,6 +16,7 @@ class ContratoMapper(
 ) {
 
     fun toContratoEntity(contrato : ContratoFormDTO) : ContratoEntity {
+        println(contrato)
         return ContratoEntity(
             numero = contrato.numero,
             obraId = obraRepository.findById(contrato.obra).get(),

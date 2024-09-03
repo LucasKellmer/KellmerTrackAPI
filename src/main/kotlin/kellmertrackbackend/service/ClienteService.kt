@@ -17,9 +17,9 @@ class ClienteService(
         return clienteRepository.pesquisaCliente(nome)
     }
 
-    fun salvaCliente(empresa : ClienteDTO) : ClienteEntity {
-        val empresaEntity = clienteMapper.toClienteEntity(empresa)
-        return clienteRepository.save(empresaEntity)
+    fun salvaCliente(cliente : ClienteDTO) : ClienteEntity {
+        val clienteEntity = clienteMapper.toClienteEntity(cliente)
+        return clienteRepository.save(clienteEntity)
     }
 
     fun buscaClientes() : List<ClienteDTO>{
@@ -34,7 +34,7 @@ class ClienteService(
         try {
             return clienteRepository.deleteById(id)
         }catch (e : Exception){
-            throw Exception("Erro ao excluir empresa: ${e.message}")
+            throw Exception("Erro ao excluir cliente: ${e.message}")
         }
     }
 
@@ -43,7 +43,7 @@ class ClienteService(
     }
 
     fun buscaClienteById(id: Int): ClienteDTO?{
-        val empresaEntity = clienteRepository.findById(id)
-        return empresaEntity?.let { clienteMapper.toClienteDTO(it) }
+        val clienteEntity = clienteRepository.findById(id)
+        return clienteEntity?.let { clienteMapper.toClienteDTO(it) }
     }
 }

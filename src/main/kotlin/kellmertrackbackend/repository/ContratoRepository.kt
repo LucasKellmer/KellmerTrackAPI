@@ -1,6 +1,5 @@
 package kellmertrackbackend.repository
 
-import kellmertrackbackend.model.dto.ClienteDTO
 import kellmertrackbackend.model.dto.ContratoListDTO
 import kellmertrackbackend.model.dto.PesquisaDTO
 import kellmertrackbackend.model.entities.ContratoEntity
@@ -16,8 +15,8 @@ interface ContratoRepository : JpaRepository<ContratoEntity, String>{
         "select new kellmertrackbackend.model.dto.ContratoListDTO(" +
                 " c.numero, c.obraId.descricao, c.empresa.nome, c.cliente.nome" +
                 ") from ContratoEntity c" +
-                " where (c.numero = :numero or : numero = '999')" +
-                " and (c.empresa.codigo like upper(concat(:empresa, '%')) or :empresa = '')" +
+                " where (c.numero like upper(concat(:numero, '%')) or :numero = '')" +
+                " and (c.empresa.codigo = :empresa or :empresa = '999')" +
                 " and (c.cliente.nome like upper(concat(:cliente, '%')) or :cliente = '')" +
                 " order by c.numero"
     )
