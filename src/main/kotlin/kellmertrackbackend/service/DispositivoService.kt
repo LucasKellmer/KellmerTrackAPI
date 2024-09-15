@@ -62,14 +62,6 @@ class DispositivoService(
     fun salvaDispositivo(dispositivo: DispositivoFormDTO): DispositivoEntity {
         val dispositivoEntity = dispositivoMapper.toDispositivoEntity(dispositivo)
         try {
-            if (dispositivoRepository.findByNumeroInterno(dispositivo.numeroInterno) != null)
-                throw InvalidRegistryException("Já existe um dispositivo com esse numero interno cadastrado! Verifique!")
-            if (dispositivoRepository.findByMac(dispositivo.mac) != null)
-                throw InvalidRegistryException("Já existe um um dispositivo com esse mac cadastrado! Verifique!")
-            if (dispositivoRepository.findByVeiculoIdentificacao(dispositivo.veiculo) != null)
-                throw InvalidRegistryException("Já existe um dispositivo vinculado a esse veículo cadastrado! Verifique!")
-            if (dispositivoRepository.findByMotoristaId(dispositivo.motoristaId) != null)
-                throw InvalidRegistryException("Já existe um dispositivo vinculado a esse motorista cadastrado! Verifique!")
             return dispositivoRepository.save(dispositivoEntity)
         } catch (e: Exception) {
             throw Exception("Ocorreu um erro ao salvar o dispositivo! ${e.message}")
