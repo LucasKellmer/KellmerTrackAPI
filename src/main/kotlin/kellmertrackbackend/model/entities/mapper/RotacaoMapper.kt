@@ -20,7 +20,7 @@ class RotacaoMapper(
             veiculo = veiculoRepository.findByIdentificacao(rotacao.veiculo),
             momento = rotacao.momento!!,
             rpm = rotacao.rpm!!,
-            entregaId = entregaRepository.findById(rotacao.entregaId),
+            entregaId = if(rotacao.entregaId != null) entregaRepository.findById(rotacao.entregaId).get() else null,
             bateria = rotacao.bateria,
             temperatura = rotacao.temperatura,
             direcao = rotacao.direcao,

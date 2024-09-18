@@ -158,6 +158,8 @@ class FirebaseDatabase (
 
     private fun atualizaRotacao(rotacao : RotacaoDTO){
         try {
+            println("=========================== Rotação recebida:")
+            println(rotacao)
             rotacaoService.salvaRotacao(rotacao)
             excluiRotacaoFirebase(rotacao.id!!)
         } catch (e:Exception){
