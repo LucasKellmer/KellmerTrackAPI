@@ -67,7 +67,11 @@ class MonitoramentoService(
         return entregasRepository.buscaEntregasMonitoramento()
     }
 
-    fun buscaRotacoesByEntrega(entregaId: Int): List<RotacaoDTO>? {
+    /*fun buscaRotacoesByEntrega(entregaId: Int): List<RotacaoDTO>? {
         return rotacaoMapper.fromEntitytoRotacaoDTO(rotacaoRepository.buscaRotacaoByEntrega(entregaId))
+    }*/
+
+    fun buscaRotacoesByVeiculo(veiculo: String): List<RotacaoDTO>? {
+        return rotacaoMapper.fromEntitytoRotacaoDTO(rotacaoRepository.buscaRotacaoByVeiculo(veiculo))
     }
 }

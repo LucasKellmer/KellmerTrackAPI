@@ -21,7 +21,7 @@ interface RotacaoRepository : JpaRepository<RotacaoEntity, UUID> {
     //@Query(name = "buscaUltimaRotacao", nativeQuery = true)
     fun buscaUltimaRotacao(identificacao: String): RotacaoDTO?
 
-    @Query(
+    /*@Query(
         "SELECT id, dispositivo, veiculo, momento, rpm, entrega_id, bateria, temperatura, direcao \n" +
                 "FROM ( \n" +
                 "    SELECT *, LAG(rpm) OVER (ORDER BY momento) AS rpm_anterior \n" +
@@ -31,7 +31,19 @@ interface RotacaoRepository : JpaRepository<RotacaoEntity, UUID> {
                 "WHERE rpm_anterior IS NULL OR rpm <> rpm_anterior \n" +
                 "ORDER BY momento", nativeQuery = true
     )
-    fun buscaRotacaoByEntrega(entregaId: Int): List<RotacaoEntity>?
+    fun buscaRotacaoByEntrega(entregaId: Int): List<RotacaoEntity>?*/
+
+    @Query(
+        "SELECT id, dispositivo, veiculo, momento, rpm, entrega_id, bateria, temperatura, direcao \n" +
+                "FROM ( \n" +
+                "    SELECT *, LAG(rpm) OVER (ORDER BY momento) AS rpm_anterior \n" +
+                "    FROM rotacoes \n" +
+                "    WHERE veiculo = :veiculo \n" +
+                ") AS sub \n" +
+                "WHERE rpm_anterior IS NULL OR rpm <> rpm_anterior and momento >= current_date\n" +
+                "ORDER BY momento", nativeQuery = true
+    )
+    fun buscaRotacaoByVeiculo(veiculo: String): List<RotacaoEntity>?
 
     @Query("select new kellmertrackbackend.model.dto.RotacaoDTO(" +
             " r.id, r.dispositivo.numeroInterno, r.veiculo.identificacao, r.momento, r.rpm, r.entregaId.id," +

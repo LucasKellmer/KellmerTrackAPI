@@ -29,8 +29,13 @@ class MonitoramentoController(
         return ResponseEntity.ok(monitoramentoService.buscaEntregas())
     }
 
-    @GetMapping("monitoramento/rotacoes/{entregaId}")
+    /*@GetMapping("monitoramento/rotacoes/{entregaId}")
     private fun buscaRotacoesByEntrega(@PathVariable entregaId: Int) : ResponseEntity<List<RotacaoDTO>> {
         return ResponseEntity.ok(monitoramentoService.buscaRotacoesByEntrega(entregaId))
+    }*/
+
+    @GetMapping("monitoramento/veiculo/{veiculo}")
+    private fun buscaRotacoesByEntrega(@PathVariable veiculo: String) : ResponseEntity<List<RotacaoDTO>> {
+        return ResponseEntity.ok(monitoramentoService.buscaRotacoesByVeiculo(veiculo))
     }
 }
