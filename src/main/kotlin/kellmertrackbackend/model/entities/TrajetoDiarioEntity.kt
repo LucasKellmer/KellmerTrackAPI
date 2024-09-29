@@ -7,7 +7,7 @@ import java.util.*
 @Table(name = "trajetos_diarios")
 data class TrajetoDiarioEntity(
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id : Int? = null,
     val data : Date,
     val veiculo : String,

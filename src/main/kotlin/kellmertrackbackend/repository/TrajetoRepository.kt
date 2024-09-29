@@ -1,6 +1,5 @@
 package kellmertrackbackend.repository
 
-import kellmertrackbackend.model.dto.TrajetoDiarioListDTO
 import kellmertrackbackend.model.entities.TrajetoEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
@@ -21,7 +20,7 @@ interface TrajetoRepository : JpaRepository<TrajetoEntity, UUID> {
                 "where veiculo_id = :veiculo\n"+
                 "order by momento desc limit 1", nativeQuery = true
     )
-    fun buscaUltimaLocalizacao(veiculo : String): TrajetoEntity?
+    fun buscaUltimaLocalizacao(veiculo : String?): TrajetoEntity?
 
     @Query("select distinct veiculo_id from trajetos where cast(momento as date) = :data", nativeQuery = true)
     fun buscaVeiculosTrajeto(data: Date) : List<String>

@@ -36,11 +36,11 @@ interface RotacaoRepository : JpaRepository<RotacaoEntity, UUID> {
     @Query(
         "SELECT id, dispositivo, veiculo, momento, rpm, entrega_id, bateria, temperatura, direcao \n" +
                 "FROM ( \n" +
-                "    SELECT *, LAG(rpm) OVER (ORDER BY momento) AS rpm_anterior \n" +
+                "    SELECT *, LAG(direcao) OVER (ORDER BY momento) AS rpm_anterior \n" +
                 "    FROM rotacoes \n" +
                 "    WHERE veiculo = :veiculo \n" +
                 ") AS sub \n" +
-                "WHERE rpm_anterior IS NULL OR rpm <> rpm_anterior and momento >= current_date\n" +
+                "WHERE rpm_anterior IS NULL OR direcao <> rpm_anterior and momento >= current_date\n" +
                 "ORDER BY momento", nativeQuery = true
     )
     fun buscaRotacaoByVeiculo(veiculo: String): List<RotacaoEntity>?
