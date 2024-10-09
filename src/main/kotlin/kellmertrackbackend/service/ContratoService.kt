@@ -42,8 +42,8 @@ class ContratoService(
         return contratoRepository.pesquisaContratoCombobox()
     }
 
-    fun buscaContratoById(id: String): ContratoListDTO?{
+    fun buscaContratoByNumero(id: String): ContratoFormDTO?{
         val contratoEntity = contratoRepository.findByNumero(id)
-        return contratoEntity?.let { contratoMapper.toContratoListDTO(it) }
+        return contratoEntity?.let { contratoMapper.toContratoFormDTO(it) }
     }
 }

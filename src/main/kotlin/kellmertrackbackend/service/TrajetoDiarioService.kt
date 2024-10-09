@@ -21,7 +21,7 @@ class TrajetoDiarioService(
         val dateFormat = SimpleDateFormat("yyyy-MM-dd")
         val timeFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 
-        for (i in 1..8){
+        for (i in 0..8){
             val dateSql: Date = java.sql.Date.valueOf(LocalDate.now().minusDays(i.toLong()))
 
             trajetoRepository.buscaVeiculosTrajeto(dateSql).forEach { veiculo ->

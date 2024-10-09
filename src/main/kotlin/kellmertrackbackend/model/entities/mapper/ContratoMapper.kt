@@ -19,7 +19,7 @@ class ContratoMapper(
         println(contrato)
         return ContratoEntity(
             numero = contrato.numero,
-            obraId = obraRepository.findById(contrato.obra).get(),
+            obraId = obraRepository.findById(contrato.obra),
             empresa = empresaRepository.findByCodigo(contrato.empresa),
             cliente = clienteRepository.findById(contrato.cliente)
         )
@@ -31,6 +31,15 @@ class ContratoMapper(
             obra = contrato.obraId?.descricao,
             empresa = contrato.empresa?.nome,
             cliente = contrato.cliente?.nome
+        )
+    }
+
+    fun toContratoFormDTO(contrato : ContratoEntity) : ContratoFormDTO {
+        return ContratoFormDTO(
+            numero = contrato.numero,
+            obra = contrato.obraId?.id,
+            empresa = contrato.empresa?.codigo,
+            cliente = contrato.cliente?.id
         )
     }
 }

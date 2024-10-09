@@ -40,7 +40,7 @@ class ContratoController(
     }
 
     @GetMapping("contratos/{numero}")
-    fun buscaContratoBy(@PathVariable numero: String): ResponseEntity<ContratoListDTO?> {
-        return ResponseEntity.ok(contratoService.buscaContratoById(numero))
+    fun buscaContratoByNumero(@PathVariable numero: String): ResponseEntity<ContratoFormDTO?> {
+        return ResponseEntity.ok(contratoService.buscaContratoByNumero(numero))
     }
 }
